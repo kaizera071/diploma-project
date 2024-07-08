@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: ingestion-service
 spec:
+  type: NodePort  # Specify the type as NodePort to expose the service
   selector:
     app: ingestion
   ports:
     - protocol: TCP
-      port: 8080          # Port exposed by the service
-      targetPort: 8080    # Port on the container
-  type: NodePort          # Exposes the service on a port on the host
+      port: 80 # Port on the NodePort service (external access)
+      targetPort: 8080  # Port on the pods (internal access)
