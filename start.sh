@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source audit-system-parent/scripts/common.sh
+source scripts/common
 
 # Function to start Minikube if not running
 start_minikube() {
@@ -27,7 +27,7 @@ install_kafka() {
     echo "Updating Helm repositories..."
     helm repo update
     echo "Installing Kafka via Helm chart..."
-    helm install my-kafka bitnami/kafka --values kafka-zoo.values.yaml
+    helm install my-kafka bitnami/kafka --values chart-values/kafka-zoo.values.yaml
     echo "Kafka installation completed."
 }
 
