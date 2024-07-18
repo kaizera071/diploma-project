@@ -22,7 +22,13 @@ setup_minikube_docker_env() {
 
 # Function to install Kafka
 install_kafka() {
-    helm install kafka oci://registry-1.docker.io/bitnamicharts/kafka
+    echo "Adding Bitnami Helm repository..."
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    echo "Updating Helm repositories..."
+    helm repo update
+    echo "Installing Kafka via Helm chart..."
+    helm install my-kafka bitnami/kafka --values chart-values/kafka-zoo.values.yaml
+    echo "Kafka installation completed."
 }
 
 install_nginx() {
@@ -50,14 +56,7 @@ build_docker_image() {
     docker build -t "$image_tag" -f "$doget_file_location" .
 }
 
-# Start Minikube if not already running
-start_minikube
-
-# Set up Minikube Docker environment
 setup_minikube_docker_env
-
-# Install Kafka
-install_kafka
 
 # Build ingestion service
 build_maven_project audit-system-parent/ingestion/pom.xml
@@ -71,15 +70,3 @@ apply_resource_with_retry "audit-system-parent/ingestion/k8s/service.yaml"
 
 # Deploy audit system ingress
 apply_resource_with_retry "audit-system-parent/ingress.yaml"
-
-# Install Nginx
-install_nginx
-
-# Get the name of the Nginx pod
-POD_NAME=$(kubectl get pods -l app.kubernetes.io/instance=my-nginx-ingress -o jsonpath='{.items[0].metadata.name}')
-
-# Wait for the pod to become running
-wait_for_pod_running "$POD_NAME"
-
-# Port forward the pod
-kubectl port-forward $POD_NAME 8080:80 &

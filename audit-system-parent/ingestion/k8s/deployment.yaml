@@ -13,5 +13,13 @@ spec:
         app: ingestion
     spec:
       containers:
-      - name: ingestion
-        image: ingestion:07.07.2024
+        - name: ingestion
+          image: ingestion:18.07.2024
+          env:
+            - name: KAFKA_USERNAME
+              value: "user1"
+            - name: KAFKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kafka-user-passwords
+                  key: client-passwords

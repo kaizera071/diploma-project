@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    kubernetes:
+      enabled: true
+      secrets:
+        enabled: true
+        name: my-kafka-user-passwords
+        namespace: default
+
+my:
+  kafka:
+    username: ${KAFKA_USERNAME}
+    password: ${KAFKA_PASSWORD}
