@@ -11,3 +11,8 @@ my:
   kafka:
     username: ${KAFKA_USERNAME}
     password: ${KAFKA_PASSWORD}
+  minio:
+    bucketname: audit-bucket
+    username: ${MINIO_USERNAME}
+    password: ${MINIO_PASSWORD}
+    url: "http://minio.default.svc.cluster.local:9001"

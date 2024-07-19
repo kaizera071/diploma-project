@@ -23,3 +23,10 @@ spec:
                 secretKeyRef:
                   name: kafka-user-passwords
                   key: client-passwords
+            - name: MINIO_USERNAME
+              value: "admin"
+            - name: MINIO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: minio
+                  key: root-password

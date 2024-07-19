@@ -35,6 +35,11 @@ install_nginx() {
     echo "Nginx installation completed."
 }
 
+install_minio() {
+    echo "Installing Minio via Helm"
+    helm install minio oci://registry-1.docker.io/bitnamicharts/minio
+}
+
 # Build ingestion maven project
 build_maven_project() {
     local pom_path="$1"
@@ -58,6 +63,9 @@ setup_minikube_docker_env
 
 # Install Kafka
 install_kafka
+
+# Install Minio
+install_minio
 
 # Build ingestion service
 build_maven_project audit-system-parent/ingestion/pom.xml
@@ -83,3 +91,4 @@ wait_for_pod_running "$POD_NAME"
 
 # Port forward the pod
 kubectl port-forward $POD_NAME 8080:80 &
+kubectl port-forward svc/minio 9001:9001 &
