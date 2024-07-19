@@ -1,0 +1,110 @@
+{
+    "audit_event": {
+        "data_access": {
+            "uuid": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            "user": "test-user",
+            "time": "1970-01-01T00:00:00.000Z",
+            "tenant": "$PROVIDER",
+            "identityProvider": "$IDP",
+            "object": {
+                "type": "Online system",
+                "id": {
+                    "sampleIdentifierName": "sampleIdentifierValue",
+                    "additionalProp1": "string",
+                    "additionalProp2": "string",
+                    "additionalProp3": "string"
+                }
+            },
+            "data_subject": {
+                "type": "credentials",
+                "role": "authentication",
+                "id": {
+                    "username": "testUser",
+                    "additionalProp1": "string",
+                    "additionalProp2": "string",
+                    "additionalProp3": "string"
+                }
+            },
+            "attributes": [
+                {
+                    "name": "string",
+                    "successful": true
+                }
+            ],
+            "customDetails": {}
+        },
+        "data_modification": {
+            "uuid": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            "user": "test-user",
+            "time": "1970-01-01T00:00:00.000Z",
+            "tenant": "$PROVIDER",
+            "object": {
+                "type": "Online system",
+                "id": {
+                    "sampleIdentifierName": "sampleIdentifierValue",
+                    "additionalProp1": "string",
+                    "additionalProp2": "string",
+                    "additionalProp3": "string"
+                }
+            },
+            "data_subject": {
+                "type": "credentials",
+                "role": "authentication",
+                "id": {
+                    "username": "testUser",
+                    "additionalProp1": "string",
+                    "additionalProp2": "string",
+                    "additionalProp3": "string"
+                }
+            },
+            "attributes": [
+                {
+                    "name": "string",
+                    "old": "string",
+                    "new": "string"
+                }
+            ],
+            "customDetails": {}
+        },
+        "configuration_change": {
+            "uuid": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            "user": "test-user",
+            "time": "1970-01-01T00:00:00.000Z",
+            "tenant": "$PROVIDER",
+            "id": "ffffffff-aaaa-bbbb-cccc-dddddddddddd",
+            "object": {
+                "type": "Online system",
+                "id": {
+                    "sampleIdentifierName": "sampleIdentifierValue",
+                    "additionalProp1": "string",
+                    "additionalProp2": "string",
+                    "additionalProp3": "string"
+                }
+            },
+            "attributes": [
+                {
+                    "name": "string",
+                    "old": "string",
+                    "new": "string"
+                }
+            ],
+            "customDetails": {}
+        },
+        "security_event": {
+            "uuid": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+            "user": "test-user",
+            "time": "1970-01-01T00:00:00.000Z",
+            "tenant": "$PROVIDER",
+            "data": "security event message",
+            "identityProvider": "$IDP",
+            "ip": "192.168.0.1",
+            "attributes": [
+                {
+                    "name": "string",
+                    "value": "string"
+                }
+            ],
+            "customDetails": {}
+        }
+    }
+}

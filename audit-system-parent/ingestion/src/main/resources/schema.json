@@ -1,0 +1,470 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "audit_event": {
+      "type": "object",
+      "properties": {
+        "data_access": {
+          "$ref": "#/definitions/data_access"
+        },
+        "data_modification": {
+          "$ref": "#/definitions/data_modification"
+        },
+        "configuration_change": {
+          "$ref": "#/definitions/configuration_change"
+        },
+        "security_event": {
+          "$ref": "#/definitions/security_event"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "data_access"
+          ],
+          "properties": {
+            "data_access": {
+              "$ref": "#/definitions/data_access"
+            }
+          }
+        },
+        {
+          "required": [
+            "data_modification"
+          ],
+          "properties": {
+            "data_modification": {
+              "$ref": "#/definitions/data_modification"
+            }
+          }
+        },
+        {
+          "required": [
+            "configuration_change"
+          ],
+          "properties": {
+            "configuration_change": {
+              "$ref": "#/definitions/configuration_change"
+            }
+          }
+        },
+        {
+          "required": [
+            "security_event"
+          ],
+          "properties": {
+            "security_event": {
+              "$ref": "#/definitions/security_event"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "audit_event"
+  ],
+  "definitions": {
+    "data_access": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "identityProvider": {
+          "type": "string"
+        },
+        "object": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "id": {
+              "type": "object",
+              "properties": {
+                "sampleIdentifierName": {
+                  "type": "string"
+                },
+                "additionalProp1": {
+                  "type": "string"
+                },
+                "additionalProp2": {
+                  "type": "string"
+                },
+                "additionalProp3": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sampleIdentifierName",
+                "additionalProp1",
+                "additionalProp2",
+                "additionalProp3"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "id"
+          ]
+        },
+        "data_subject": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "id": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "additionalProp1": {
+                  "type": "string"
+                },
+                "additionalProp2": {
+                  "type": "string"
+                },
+                "additionalProp3": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "username",
+                "additionalProp1",
+                "additionalProp2",
+                "additionalProp3"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "role",
+            "id"
+          ]
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "successful": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "name",
+              "successful"
+            ]
+          }
+        },
+        "customDetails": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "uuid",
+        "user",
+        "time",
+        "tenant",
+        "identityProvider",
+        "object",
+        "data_subject",
+        "attributes",
+        "customDetails"
+      ]
+    },
+    "data_modification": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "object": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "id": {
+              "type": "object",
+              "properties": {
+                "sampleIdentifierName": {
+                  "type": "string"
+                },
+                "additionalProp1": {
+                  "type": "string"
+                },
+                "additionalProp2": {
+                  "type": "string"
+                },
+                "additionalProp3": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sampleIdentifierName",
+                "additionalProp1",
+                "additionalProp2",
+                "additionalProp3"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "id"
+          ]
+        },
+        "data_subject": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "id": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "additionalProp1": {
+                  "type": "string"
+                },
+                "additionalProp2": {
+                  "type": "string"
+                },
+                "additionalProp3": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "username",
+                "additionalProp1",
+                "additionalProp2",
+                "additionalProp3"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "role",
+            "id"
+          ]
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "old": {
+                "type": "string"
+              },
+              "new": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "old",
+              "new"
+            ]
+          }
+        },
+        "customDetails": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "uuid",
+        "user",
+        "time",
+        "tenant",
+        "object",
+        "data_subject",
+        "attributes",
+        "customDetails"
+      ]
+    },
+    "configuration_change": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "object": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "id": {
+              "type": "object",
+              "properties": {
+                "sampleIdentifierName": {
+                  "type": "string"
+                },
+                "additionalProp1": {
+                  "type": "string"
+                },
+                "additionalProp2": {
+                  "type": "string"
+                },
+                "additionalProp3": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sampleIdentifierName",
+                "additionalProp1",
+                "additionalProp2",
+                "additionalProp3"
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "id"
+          ]
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "old": {
+                "type": "string"
+              },
+              "new": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "old",
+              "new"
+            ]
+          }
+        },
+        "customDetails": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "uuid",
+        "user",
+        "time",
+        "tenant",
+        "id",
+        "object",
+        "attributes",
+        "customDetails"
+      ]
+    },
+    "security_event": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        },
+        "tenant": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        },
+        "identityProvider": {
+          "type": "string"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ]
+          }
+        },
+        "customDetails": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "uuid",
+        "user",
+        "time",
+        "tenant",
+        "data",
+        "identityProvider",
+        "ip",
+        "attributes",
+        "customDetails"
+      ]
+    }
+  }
+}
