@@ -16,15 +16,11 @@ spec:
         - name: ingestion
           image: ingestion:18.07.2024
           env:
-            - name: KAFKA_USERNAME
-              value: "user1"
             - name: KAFKA_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: kafka-user-passwords
                   key: client-passwords
-            - name: MINIO_USERNAME
-              value: "admin"
             - name: MINIO_PASSWORD
               valueFrom:
                 secretKeyRef:

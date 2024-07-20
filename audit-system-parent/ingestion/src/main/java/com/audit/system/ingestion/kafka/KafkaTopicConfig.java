@@ -9,7 +9,7 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaTopicConfig {
 
     @Bean
-    public NewTopic topicExample() {
+    public NewTopic createTopic() {
         return TopicBuilder.name("ingestion-topic")
                 .partitions(8)
                 .replicas(3)
