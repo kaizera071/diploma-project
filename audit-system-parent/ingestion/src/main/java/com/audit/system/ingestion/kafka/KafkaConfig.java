@@ -42,8 +42,6 @@ public class KafkaConfig {
         configProps.put("sasl.jaas.config", String.format("%s required username=\"%s\" " + "password=\"%s\";",
                 PlainLoginModule.class.getName(), kafkaUsername, kafkaPassword));
 
-        System.out.println("Pass: " + kafkaPassword);
-
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 

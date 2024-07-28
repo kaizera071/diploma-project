@@ -16,3 +16,10 @@ spec:
                 name: ingestion-service
                 port:
                   number: 80
+          - path: /retrieval
+            pathType: Prefix
+            backend:
+              service:
+                name: retrieval-service
+                port:
+                  number: 80

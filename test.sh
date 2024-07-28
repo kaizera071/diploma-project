@@ -58,15 +58,15 @@ build_docker_image() {
 
 setup_minikube_docker_env
 
-# Build ingestion service
-build_maven_project audit-system-parent/ingestion/pom.xml
+# Build retrieval service
+build_maven_project audit-system-parent/retrieval/pom.xml
 
-# Build ingestion Docker image
-build_docker_image "ingestion:18.07.2024" audit-system-parent/ingestion/k8s/Dockerfile
+# Build retrieval Docker image
+build_docker_image "retrieval:18.07.2024" audit-system-parent/retrieval/k8s/Dockerfile
 
-# Deploy ingestion component
-apply_resource_with_retry "audit-system-parent/ingestion/k8s/deployment.yaml"
-apply_resource_with_retry "audit-system-parent/ingestion/k8s/service.yaml"
+# Deploy retrieval component
+apply_resource_with_retry "audit-system-parent/retrieval/k8s/deployment.yaml"
+apply_resource_with_retry "audit-system-parent/retrieval/k8s/service.yaml"
 
 # Deploy audit system ingress
 apply_resource_with_retry "audit-system-parent/ingress.yaml"

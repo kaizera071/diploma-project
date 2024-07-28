@@ -14,9 +14,6 @@ public class KafkaConsumerService {
 
     @KafkaListener(topics = "ingestion-topic", groupId = "consumer-group")
     public void listen(String message) {
-        System.out.println("Received Message: " + message);
-        // Save message to MinIO
         minioService.saveToMinIO(message);
-
     }
 }

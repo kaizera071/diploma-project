@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    kubernetes:
+      enabled: true
+my:
+  minio:
+    bucketname: audit-bucket
+    username: admin
+    password: ${MINIO_PASSWORD}
+    url: http://minio.default.svc.cluster.local:9000

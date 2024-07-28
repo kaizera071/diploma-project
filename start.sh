@@ -77,6 +77,16 @@ build_docker_image "ingestion:18.07.2024" audit-system-parent/ingestion/k8s/Dock
 apply_resource_with_retry "audit-system-parent/ingestion/k8s/deployment.yaml"
 apply_resource_with_retry "audit-system-parent/ingestion/k8s/service.yaml"
 
+# Build retrieval service
+build_maven_project audit-system-parent/retrieval/pom.xml
+
+# Build retrieval Docker image
+build_docker_image "retrieval:18.07.2024" audit-system-parent/retrieval/k8s/Dockerfile
+
+# Deploy retrieval component
+apply_resource_with_retry "audit-system-parent/retrieval/k8s/deployment.yaml"
+apply_resource_with_retry "audit-system-parent/retrieval/k8s/service.yaml"
+
 # Deploy audit system ingress
 apply_resource_with_retry "audit-system-parent/ingress.yaml"
 
@@ -84,11 +94,15 @@ apply_resource_with_retry "audit-system-parent/ingress.yaml"
 install_nginx
 
 # Get the name of the Nginx pod
-POD_NAME=$(kubectl get pods -l app.kubernetes.io/instance=my-nginx-ingress -o jsonpath='{.items[0].metadata.name}')
+NGINX_POD_NAME=$(kubectl get pods -l app.kubernetes.io/instance=my-nginx-ingress -o jsonpath='{.items[0].metadata.name}')
+# Wait for the nginx pod to become running
+wait_for_pod_running "$NGINX_POD_NAME"
 
-# Wait for the pod to become running
-wait_for_pod_running "$POD_NAME"
+# Get the name of the Minio pod
+MINIO_POD_NAME=$(kubectl get pods -l app.kubernetes.io/instance=minio -o jsonpath='{.items[0].metadata.name}')
+# Wait for the Minio pod to become running
+wait_for_pod_running "$MINIO_POD_NAME"
 
 # Port forward the pod
-kubectl port-forward $POD_NAME 8080:80 &
+kubectl port-forward $NGINX_POD_NAME 8080:80 &
 kubectl port-forward svc/minio 9001:9001 &
