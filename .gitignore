@@ -4,6 +4,9 @@
 # VSCode
 .vscode
 
+# mvn
+mvnw*
+
 # Log file
 *.log
 
