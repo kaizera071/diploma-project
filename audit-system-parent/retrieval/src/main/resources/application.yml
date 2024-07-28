@@ -8,3 +8,5 @@ my:
     username: admin
     password: ${MINIO_PASSWORD}
     url: http://minio.default.svc.cluster.local:9000
+  encryption:
+    aes-key: ${AES_KEY}

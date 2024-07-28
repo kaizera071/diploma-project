@@ -26,3 +26,8 @@ spec:
                 secretKeyRef:
                   name: minio
                   key: root-password
+            - name: AES_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aes-key
+                  key: key

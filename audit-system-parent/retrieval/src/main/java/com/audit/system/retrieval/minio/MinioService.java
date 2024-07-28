@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.audit.system.retrieval.security.EncryptionUtil;
+import com.audit.system.retrieval.security.KeyManager;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,6 +28,9 @@ public class MinioService {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private KeyManager keyManager;
 
     public List<String> listObjects(String bucketName, String prefix) {
         List<String> objectNames = new ArrayList<>();
@@ -50,7 +55,10 @@ public class MinioService {
                             .object(objectName)
                             .build());
 
-            return objectMapper.readTree(stream);
+            // Assuming the data is encrypted, we decrypt it here
+            String encryptedContent = new String(stream.readAllBytes());
+            String decryptedContent = decryptMessage(encryptedContent);
+            return objectMapper.readTree(decryptedContent);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,5 +91,14 @@ public class MinioService {
                 })
                 .map(objectName -> readObject(bucketName, objectName))
                 .collect(Collectors.toList());
+    }
+
+    private String decryptMessage(String encryptedMessage) {
+        try {
+            return EncryptionUtil.decrypt(encryptedMessage, keyManager.getSecretKey());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.audit.system.ingestion.security.EncryptionUtil;
+import com.audit.system.ingestion.security.KeyManager;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,6 +25,9 @@ public class MinioService {
 
     @Autowired
     private MinioClient minioClient;
+
+    @Autowired
+    private KeyManager keyManager;
 
     @Value("${my.minio.bucketname}")
     private String minioBucketName;
@@ -48,11 +53,12 @@ public class MinioService {
                 time = eventData.path("time").asText();
                 user = eventData.path("user").asText();
             }
-
-            String prettyString = objectMapper.writeValueAsString(jsonNode);
             String objectKey = String.format("%s/%s/%s/%s", tenant, time, eventType, user);
 
-            InputStream is = new ByteArrayInputStream(prettyString.getBytes());
+            String prettyString = objectMapper.writeValueAsString(jsonNode);
+            String encryptedMessage = EncryptionUtil.encrypt(prettyString, keyManager.getSecretKey());
+            InputStream is = new ByteArrayInputStream(encryptedMessage.getBytes());
+
             minioClient.putObject(
                     PutObjectArgs.builder()
                             .bucket(minioBucketName)

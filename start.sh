@@ -67,6 +67,9 @@ install_kafka
 # Install Minio
 install_minio
 
+# Create a secret for the AES key
+kubectl create secret generic aes-key --from-literal=key=$(openssl rand -base64 32)
+
 # Build ingestion service
 build_maven_project audit-system-parent/ingestion/pom.xml
 
