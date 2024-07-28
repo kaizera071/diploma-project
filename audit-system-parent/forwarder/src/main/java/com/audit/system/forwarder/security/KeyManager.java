@@ -1,4 +1,4 @@
-package com.audit.system.ingestion.security;
+package com.audit.system.forwarder.security;
 
 import java.util.Base64;
 

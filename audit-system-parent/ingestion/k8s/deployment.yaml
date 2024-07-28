@@ -21,13 +21,3 @@ spec:
                 secretKeyRef:
                   name: kafka-user-passwords
                   key: client-passwords
-            - name: MINIO_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: minio
-                  key: root-password
-            - name: AES_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aes-key
-                  key: key

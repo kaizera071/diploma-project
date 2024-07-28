@@ -6,13 +6,14 @@ spring:
         enabled: true
         name: my-kafka-user-passwords
         namespace: default
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: https://dev-npnifdzb4nunlzn6.us.auth0.com/
-          jwk-set-uri: https://dev-npnifdzb4nunlzn6.us.auth0.com/.well-known/jwks.json
 my:
   kafka:
     username: user1
     password: ${KAFKA_PASSWORD}
+  minio:
+    bucketname: audit-bucket
+    username: admin
+    password: ${MINIO_PASSWORD}
+    url: http://minio.default.svc.cluster.local:9000
+  encryption:
+    aes-key: ${AES_KEY}

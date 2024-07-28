@@ -1,10 +1,10 @@
-package com.audit.system.ingestion.kafka;
+package com.audit.system.forwarder.kafka;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import com.audit.system.ingestion.minio.MinioService;
+import com.audit.system.forwarder.minio.MinioService;
 
 @Service
 public class KafkaConsumerService {

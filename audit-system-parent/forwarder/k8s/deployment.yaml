@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: forwarder-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: forwarder
+  template:
+    metadata:
+      labels:
+        app: forwarder
+    spec:
+      containers:
+        - name: forwarder
+          image: forwarder:18.07.2024
+          env:
+            - name: KAFKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kafka-user-passwords
+                  key: client-passwords
+            - name: MINIO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: minio
+                  key: root-password
+            - name: AES_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aes-key
+                  key: key

@@ -1,4 +1,4 @@
-package com.audit.system.ingestion.minio;
+package com.audit.system.forwarder.minio;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;

@@ -90,6 +90,15 @@ build_docker_image "retrieval:18.07.2024" audit-system-parent/retrieval/k8s/Dock
 apply_resource_with_retry "audit-system-parent/retrieval/k8s/deployment.yaml"
 apply_resource_with_retry "audit-system-parent/retrieval/k8s/service.yaml"
 
+# Build forwarder service
+build_maven_project audit-system-parent/forwarder/pom.xml
+
+# Build forwarder Docker image
+build_docker_image "forwarder:18.07.2024" audit-system-parent/forwarder/k8s/Dockerfile
+
+# Deploy forwarder component
+apply_resource_with_retry "audit-system-parent/forwarder/k8s/deployment.yaml"
+
 # Deploy audit system ingress
 apply_resource_with_retry "audit-system-parent/ingress.yaml"
 
