@@ -430,8 +430,5 @@ components:
       flows:
         clientCredentials:
           tokenUrl: https://dev-npnifdzb4nunlzn6.us.auth0.com/oauth/token
-          scopes: {}
-          audience: https://dev-npnifdzb4nunlzn6.us.auth0.com/api/v2/
-          grant_type: client_credentials
 security:
   - oAuth2ClientCredentials: []
