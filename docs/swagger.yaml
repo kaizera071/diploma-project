@@ -431,5 +431,12 @@ components:
         clientCredentials:
           tokenUrl: https://dev-npnifdzb4nunlzn6.us.auth0.com/oauth/token
           scopes: {}
+      x-tokenRequest:
+        headers:
+          Content-Type: application/x-www-form-urlencoded
+          Accept: application/json
+        body:
+          grant_type: client_credentials
+          audience: https://dev-npnifdzb4nunlzn6.us.auth0.com/api/v2/
 security:
   - oAuth2ClientCredentials: []
