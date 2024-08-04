@@ -127,7 +127,21 @@ paths:
         '201':
           $ref: '#/components/responses/StatusCode201'
         '400':
-          $ref: '#/components/responses/StatusCode400'
+          description: Bad Request - Invalid input parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid parameter value"
+                  details:
+                    type: string
+                    example: "The 'startTime' parameter is missing or invalid"
+                required:
+                  - error
+                  - details
         '401':
           $ref: '#/components/responses/StatusCode401'
         '403':
