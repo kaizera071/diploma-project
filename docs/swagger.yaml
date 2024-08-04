@@ -430,5 +430,6 @@ components:
       flows:
         clientCredentials:
           tokenUrl: https://dev-npnifdzb4nunlzn6.us.auth0.com/oauth/token
+          scopes: {}
 security:
   - oAuth2ClientCredentials: []
