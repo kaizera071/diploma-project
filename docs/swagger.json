@@ -22,7 +22,7 @@
     }
   ],
   "paths": {
-    "/send": {
+    "/ingestion/send": {
       "post": {
         "summary": "Write a security event audit log",
         "security": [
@@ -387,13 +387,13 @@
           "audit_data_access": {
             "$ref": "#/components/schemas/data_access"
           },
-          "auditlogDisable": {
+          "audit_data_modification": {
             "$ref": "#/components/schemas/data_modification"
           },
-          "auditlogEnable": {
+          "audit_configuration_change": {
             "$ref": "#/components/schemas/configuration_change"
           },
-          "authnPrivilegeToGroupAdd": {
+          "audit_security_event": {
             "$ref": "#/components/schemas/security_event"
           }
         }
