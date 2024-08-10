@@ -21,6 +21,14 @@ paths:
       tags:
         - Audit system API`s
       description: Send a security event as audit log record for persistence
+      parameters:
+        - in: query
+          name: topic
+          required: false
+          schema:
+            type: string
+            example: "ingestion-topic"
+          description: Kafka topic to send the audit log record to
       requestBody:
         content:
           application/json:
