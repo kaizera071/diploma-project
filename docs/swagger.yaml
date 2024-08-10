@@ -11,7 +11,7 @@ tags:
   - name: Audit system API`s
 servers:
   - url: http://localhost:8080
-    description: Audit system 
+    description: Audit system
 paths:
   /ingestion/send:
     post:
@@ -35,7 +35,7 @@ paths:
             schema:
               type: object
               required:
-              - audit_event
+                - audit_event
               properties:
                 audit_event:
                   type: object
@@ -44,43 +44,43 @@ paths:
                         - data_access
                       properties:
                         data_access:
-                          $ref: '#/components/schemas/data_access'
+                          $ref: "#/components/schemas/data_access"
                     - required:
                         - data_modification
                       properties:
                         data_modification:
-                          $ref: '#/components/schemas/data_modification'
+                          $ref: "#/components/schemas/data_modification"
                     - required:
                         - configuration_change
                       properties:
                         configuration_change:
-                          $ref: '#/components/schemas/configuration_change'
+                          $ref: "#/components/schemas/configuration_change"
                     - required:
                         - security_event
                       properties:
                         security_event:
-                          $ref: '#/components/schemas/security_event'
+                          $ref: "#/components/schemas/security_event"
       responses:
-        '201':
-          $ref: '#/components/responses/StatusCode201'
-        '400':
-          $ref: '#/components/responses/StatusCode400'
-        '401':
-          $ref: '#/components/responses/StatusCode401'
-        '403':
-          $ref: '#/components/responses/StatusCode403'
-        '413':
-          $ref: '#/components/responses/StatusCode413'
-        '429':
-          $ref: '#/components/responses/StatusCode429'
-        '500':
-          $ref: '#/components/responses/StatusCode500'
-        '502':
-          $ref: '#/components/responses/StatusCode502'
-        '503':
-          $ref: '#/components/responses/StatusCode503'
-        '504':
-          $ref: '#/components/responses/StatusCode504'
+        "200":
+          $ref: "#/components/responses/StatusCode200"
+        "400":
+          $ref: "#/components/responses/StatusCode400"
+        "401":
+          $ref: "#/components/responses/StatusCode401"
+        "403":
+          $ref: "#/components/responses/StatusCode403"
+        "413":
+          $ref: "#/components/responses/StatusCode413"
+        "429":
+          $ref: "#/components/responses/StatusCode429"
+        "500":
+          $ref: "#/components/responses/StatusCode500"
+        "502":
+          $ref: "#/components/responses/StatusCode502"
+        "503":
+          $ref: "#/components/responses/StatusCode503"
+        "504":
+          $ref: "#/components/responses/StatusCode504"
   /retrieval/read:
     get:
       summary: Retrieve data based on parameters
@@ -111,7 +111,7 @@ paths:
           required: false
           schema:
             type: string
-            enum: 
+            enum:
               - data_access
               - data_modification
               - configuration_change
@@ -132,9 +132,9 @@ paths:
             example: "test-tenant-1"
           description: Tenant to filter by
       responses:
-        '201':
-          $ref: '#/components/responses/StatusCode201'
-        '400':
+        "200":
+          $ref: "#/components/responses/StatusCode200"
+        "400":
           description: Bad Request - Invalid input parameters
           content:
             application/json:
@@ -150,22 +150,22 @@ paths:
                 required:
                   - error
                   - details
-        '401':
-          $ref: '#/components/responses/StatusCode401'
-        '403':
-          $ref: '#/components/responses/StatusCode403'
-        '413':
-          $ref: '#/components/responses/StatusCode413'
-        '429':
-          $ref: '#/components/responses/StatusCode429'
-        '500':
-          $ref: '#/components/responses/StatusCode500'
-        '502':
-          $ref: '#/components/responses/StatusCode502'
-        '503':
-          $ref: '#/components/responses/StatusCode503'
-        '504':
-          $ref: '#/components/responses/StatusCode504'
+        "401":
+          $ref: "#/components/responses/StatusCode401"
+        "403":
+          $ref: "#/components/responses/StatusCode403"
+        "413":
+          $ref: "#/components/responses/StatusCode413"
+        "429":
+          $ref: "#/components/responses/StatusCode429"
+        "500":
+          $ref: "#/components/responses/StatusCode500"
+        "502":
+          $ref: "#/components/responses/StatusCode502"
+        "503":
+          $ref: "#/components/responses/StatusCode503"
+        "504":
+          $ref: "#/components/responses/StatusCode504"
 components:
   schemas:
     baseEvent:
@@ -186,7 +186,7 @@ components:
           description: The logged in user that performs the auditable action. To let the server-side extract the user from the JWT token, set the “$USER” string, or to set a custom user, set a custom field.
         time:
           type: string
-          example: '1970-01-01T00:00:00.000Z'
+          example: "1970-01-01T00:00:00.000Z"
           description: The time when the auditable event has been executed. This time is also relevant for filtering during audit log retrieval.
         tenant:
           type: string
@@ -227,7 +227,7 @@ components:
           - name
     attributes:
       allOf:
-        - $ref: '#/components/schemas/baseAttributes'
+        - $ref: "#/components/schemas/baseAttributes"
       type: array
       description: The list of attributes that are either added or deleted or modified.
       minItems: 1
@@ -269,7 +269,7 @@ components:
     data_access:
       type: object
       allOf:
-        - $ref: '#/components/schemas/baseEvent'
+        - $ref: "#/components/schemas/baseEvent"
         - type: object
           required:
             - attributes
@@ -278,12 +278,12 @@ components:
               type: string
               example: $IDP
             object:
-              $ref: '#/components/schemas/data_object'
+              $ref: "#/components/schemas/data_object"
             data_subject:
-              $ref: '#/components/schemas/data_subject'
+              $ref: "#/components/schemas/data_subject"
             attributes:
               allOf:
-                - $ref: '#/components/schemas/baseAttributes'
+                - $ref: "#/components/schemas/baseAttributes"
               type: array
               items:
                 type: object
@@ -294,24 +294,24 @@ components:
               type: object
               description: description of the custom elements added
     data_modification:
-        allOf:
-        - $ref: '#/components/schemas/baseEvent'
+      allOf:
+        - $ref: "#/components/schemas/baseEvent"
         - type: object
           required:
             - attributes
           properties:
             object:
-              $ref: '#/components/schemas/data_object'
+              $ref: "#/components/schemas/data_object"
             data_subject:
-              $ref: '#/components/schemas/data_subject'
+              $ref: "#/components/schemas/data_subject"
             attributes:
-              $ref: '#/components/schemas/attributes'
+              $ref: "#/components/schemas/attributes"
             customDetails:
               type: object
               description: description of the custom elements added
     configuration_change:
-        allOf:
-        - $ref: '#/components/schemas/baseEvent'
+      allOf:
+        - $ref: "#/components/schemas/baseEvent"
         - type: object
           required:
             - attributes
@@ -320,15 +320,15 @@ components:
               type: string
               example: ffffffff-aaaa-bbbb-cccc-dddddddddddd
             object:
-              $ref: '#/components/schemas/data_object'
+              $ref: "#/components/schemas/data_object"
             attributes:
-              $ref: '#/components/schemas/attributes'
+              $ref: "#/components/schemas/attributes"
             customDetails:
               type: object
               description: description of the custom elements added
     security_event:
-        allOf:
-        - $ref: '#/components/schemas/baseEvent'
+      allOf:
+        - $ref: "#/components/schemas/baseEvent"
         - type: object
           required:
             - data
@@ -347,7 +347,7 @@ components:
               description: The IP where the audited security relevant event has been executed
             attributes:
               allOf:
-                - $ref: '#/components/schemas/baseAttributes'
+                - $ref: "#/components/schemas/baseAttributes"
               type: array
               description: The list of optional attributes that are either added or deleted or modified.
               items:
@@ -361,16 +361,13 @@ components:
               type: object
               description: description of the custom elements added
   responses:
-    StatusCode201:
-      description: Audit log successfully created
+    StatusCode200:
+      description: Success
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              id:
-                type: string
-                example: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            type: string
+            example: "Success"
     StatusCode400:
       description: URI syntax error, Invalid attributes, Cannot parse the received audit log message, Connection shutdown
       content:
@@ -380,7 +377,7 @@ components:
             properties:
               user:
                 type: string
-                example: '''user'' property cannot be null'
+                example: "'user' property cannot be null"
     StatusCode401:
       description: Missing or invalid "Authorization" header
     StatusCode403:
@@ -399,7 +396,7 @@ components:
                 properties:
                   code:
                     type: string
-                    example: '429'
+                    example: "429"
                   message:
                     type: string
                     example: Too many requests
@@ -422,7 +419,7 @@ components:
                 properties:
                   code:
                     type: string
-                    example: '503'
+                    example: "503"
                   message:
                     type: string
                     example: The service instance rate limit was hit!
