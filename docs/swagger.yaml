@@ -186,14 +186,11 @@ components:
           description: The logged in user that performs the auditable action. To let the server-side extract the user from the JWT token, set the “$USER” string, or to set a custom user, set a custom field.
         time:
           type: string
-          example: "1970-01-01T00:00:00.000Z"
+          example: "2023-01-01T00:00:00.000Z"
           description: The time when the auditable event has been executed. This time is also relevant for filtering during audit log retrieval.
         tenant:
           type: string
-          enum:
-            - $PROVIDER
-            - $SUBSCRIBER
-          example: $PROVIDER
+          example: test-tenant
           description: The tenant is the identifier of the owner of the audit log message. Each audit log entry could have only single tenant equal to the zone id, that determines the subaccount that is the owner of the message. The audit log record is retrievable only for users in a role that has permissions to read the audit logs for this subaccount. The retention of the audit log message is determined based on the setup retention for this subaccount. For the premium plan, set the string “$PROVIDER”, which will let the servers extract the tenant zone id automatically from the used JWT token.
     data_object:
       type: object
