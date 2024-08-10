@@ -429,7 +429,7 @@ components:
       description: Oauth2 JWT token exchange using X509 Client Certificates
       flows:
         clientCredentials:
-          tokenUrl: https://dev-npnifdzb4nunlzn6.us.auth0.com/oauth/token
+          tokenUrl: https://cors-anywhere.herokuapp.com/https://dev-npnifdzb4nunlzn6.us.auth0.com/oauth/token
           scopes: {}
 security:
   - oAuth2ClientCredentials: []
