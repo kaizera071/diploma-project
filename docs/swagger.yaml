@@ -362,7 +362,7 @@ components:
               description: description of the custom elements added
   responses:
     SendStatusCode200:
-      description: Success
+      description: Message sent successfully
       content:
         application/json:
           schema:

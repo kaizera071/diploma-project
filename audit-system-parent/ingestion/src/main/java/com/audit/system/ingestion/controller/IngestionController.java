@@ -28,7 +28,7 @@ public class IngestionController {
 
     private static final String CONTENT_TYPE = "application/json";
 
-    @RequestMapping(method = { RequestMethod.POST }, value = "/send", produces = { CONTENT_TYPE }, consumes = {
+    @RequestMapping(method = RequestMethod.POST, value = "/send", produces = { CONTENT_TYPE }, consumes = {
             CONTENT_TYPE })
     public ResponseEntity<String> sendMessage(@RequestParam String topic, @RequestBody String message) {
         try {
@@ -38,11 +38,11 @@ public class IngestionController {
 
             // If valid, send the message
             producerService.sendMessage(topic, message);
+            return ResponseEntity.ok("Message sent successfully");
         } catch (Exception e) {
             // Return a bad request response if validation fails
             return ResponseEntity.badRequest().body("JSON validation error: " + e.getMessage());
         }
-        return ResponseEntity.ok("Message sent successfully");
     }
 
 }
