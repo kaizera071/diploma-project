@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source scripts/common
+source common
+
+cd ..
 
 # Function to start Minikube if not running
 start_minikube() {
@@ -53,6 +55,7 @@ build_docker_image() {
 
     echo "Building Docker image..."
     docker build -t "$image_tag" -f "$doget_file_location" .
+
 }
 
 # Start Minikube if not already running
