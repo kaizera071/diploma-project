@@ -7,7 +7,7 @@ The Audit system provides an Audit system REST API meant customers, which is res
 
 
 <p align="center">
-  <img src="https://github.com/kaizera071/diploma-project/blob/main/docs/AuditSystem.png?raw=true" alt="AuditSystem Base diagram"/>
+  <img src="https://github.com/kaizera071/diploma-project/blob/main/docs/diagrams/AuditSystem.png?raw=true" alt="AuditSystem Base diagram"/>
 </p>
 
 
@@ -15,8 +15,14 @@ The Audit system provides an Audit system REST API meant customers, which is res
 
 
 <p align="center">
-  <img src="https://github.com/kaizera071/diploma-project/blob/main/docs/AuditSystem-IngestionSequence.drawio.png?raw=true" alt="AuditSystem Ingestion Sequence diagram"/>
+  <img src="https://github.com/kaizera071/diploma-project/blob/main/docs/diagrams/AuditSystem-IngestionSequence.drawio.png?raw=true" alt="AuditSystem Ingestion Sequence diagram"/>
 </p>
 
 
+#### Retrieval sequence diagram:
+
+
+<p align="center">
+  <img src="https://github.com/kaizera071/diploma-project/blob/main/docs/diagrams/AuditSystem-RetrievalSequence.drawio.png?raw=true" alt="AuditSystem Retrieval Sequence diagram"/>
+</p>
 
