@@ -369,17 +369,20 @@ components:
                 type: string
                 example: "Message sent successfully"
     ReadStatusCode200:
-      type: array
-      items:
-        type: object
-        properties:
-          - type: string
-            example: Successfully retrieved 10 records.
-          - type: array
-            items:
-              type: object
-              description: Represents an item in the response data.
-              additionalProperties: true
+      description: Successfully retrieved records.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Successfully retrieved 10 records."
+              data:
+                type: array
+                items:
+                  type: object
+                  description: Represents an item in the response data.
     StatusCode400:
       description: URI syntax error, Invalid attributes, Cannot parse the received audit log message, Connection shutdown
       content:
