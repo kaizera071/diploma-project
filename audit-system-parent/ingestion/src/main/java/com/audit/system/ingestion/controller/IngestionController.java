@@ -1,5 +1,8 @@
 package com.audit.system.ingestion.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +33,7 @@ public class IngestionController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/send", produces = { CONTENT_TYPE }, consumes = {
             CONTENT_TYPE })
-    public ResponseEntity<String> sendMessage(@RequestParam String topic, @RequestBody String message) {
+    public ResponseEntity<Map<String, String>> sendMessage(@RequestParam String topic, @RequestBody String message) {
         try {
             // Parse and validate the message
             JSONObject jsonMessage = new JSONObject(message);
@@ -38,11 +41,20 @@ public class IngestionController {
 
             // If valid, send the message
             producerService.sendMessage(topic, message);
-            return ResponseEntity.ok("Message sent successfully");
+
+            // Create response body
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("message", "Message sent successfully");
+
+            // Return the response with status 200 OK
+            return ResponseEntity.ok(responseBody);
         } catch (Exception e) {
+            // Create response body for errors
+            Map<String, String> errorResponseBody = new HashMap<>();
+            errorResponseBody.put("error", "JSON validation error: " + e.getMessage());
+
             // Return a bad request response if validation fails
-            return ResponseEntity.badRequest().body("JSON validation error: " + e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponseBody);
         }
-    }
 
 }
