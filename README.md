@@ -3,11 +3,20 @@ The Audit system provides an Audit system REST API meant customers, which is res
 ### Swagger: https://kaizera071.github.io/diploma-project/
 ### Architecture diagrams:
 
-<p align="center">
-  <img src="https://github.com/kaizera071/diploma-project/blob/main/docs/AuditSystem-IngestionSequence.drawio.png?raw=true" alt="AuditSystem Ingestion Sequence diagram"/>
-</p>
+#### Base block diagram:
+
 
 <p align="center">
   <img src="https://github.com/kaizera071/diploma-project/blob/main/docs/AuditSystem.png?raw=true" alt="AuditSystem Base diagram"/>
 </p>
+
+
+#### Ingestion sequence diagram:
+
+
+<p align="center">
+  <img src="https://github.com/kaizera071/diploma-project/blob/main/docs/AuditSystem-IngestionSequence.drawio.png?raw=true" alt="AuditSystem Ingestion Sequence diagram"/>
+</p>
+
+
 
