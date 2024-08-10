@@ -361,13 +361,25 @@ components:
               type: object
               description: description of the custom elements added
   responses:
-    StatusCode200:
+    ReadStatusCode200:
+      type: array
+      items:
+        type: object
+        properties:
+          - type: string
+            example: Successfully retrieved 10 records.
+          - type: array
+            items:
+              type: object
+              description: Represents an item in the response data.
+              additionalProperties: true
+    SendStatusCode200:
       description: Success
       content:
         application/json:
           schema:
             type: string
-            example: "Success"
+            example: "Message sent successfully"
     StatusCode400:
       description: URI syntax error, Invalid attributes, Cannot parse the received audit log message, Connection shutdown
       content:

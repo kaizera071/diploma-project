@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,7 @@ public class RetrievalController {
         private MinioService minioService;
 
         @GetMapping("/read")
-        public List<JsonNode> read(
+        public ResponseEntity<Object[]> read(
                         @RequestParam(required = false) String tenant,
                         @RequestParam(required = false) String eventType,
                         @RequestParam(required = false) String user,
@@ -30,6 +31,16 @@ public class RetrievalController {
                 Instant startInstant = startTime != null ? Instant.parse(startTime) : null;
                 Instant endInstant = endTime != null ? Instant.parse(endTime) : null;
 
-                return minioService.searchObjects("audit-bucket", tenant, eventType, user, startInstant, endInstant);
+                List<JsonNode> results = minioService.searchObjects("audit-bucket", tenant, eventType, user,
+                                startInstant, endInstant);
+
+                // Create the response body as an Object array
+                Object[] responseBody = new Object[] {
+                                "Successfully retrieved " + results.size() + " records.",
+                                results
+                };
+
+                // Return the response with status 200 OK
+                return ResponseEntity.ok(responseBody);
         }
 }
