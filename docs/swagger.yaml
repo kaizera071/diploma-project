@@ -62,7 +62,7 @@ paths:
                           $ref: "#/components/schemas/security_event"
       responses:
         "200":
-          $ref: "#/components/responses/StatusCode200"
+          $ref: "#/components/responses/SendStatusCode200"
         "400":
           $ref: "#/components/responses/StatusCode400"
         "401":
@@ -133,7 +133,7 @@ paths:
           description: Tenant to filter by
       responses:
         "200":
-          $ref: "#/components/responses/StatusCode200"
+          $ref: "#/components/responses/ReadStatusCode200"
         "400":
           description: Bad Request - Invalid input parameters
           content:
@@ -361,6 +361,13 @@ components:
               type: object
               description: description of the custom elements added
   responses:
+    SendStatusCode200:
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: string
+            example: "Message sent successfully"
     ReadStatusCode200:
       type: array
       items:
@@ -373,13 +380,6 @@ components:
               type: object
               description: Represents an item in the response data.
               additionalProperties: true
-    SendStatusCode200:
-      description: Success
-      content:
-        application/json:
-          schema:
-            type: string
-            example: "Message sent successfully"
     StatusCode400:
       description: URI syntax error, Invalid attributes, Cannot parse the received audit log message, Connection shutdown
       content:
