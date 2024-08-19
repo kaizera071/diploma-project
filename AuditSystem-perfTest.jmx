@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group">
+        <intProp name="ThreadGroup.num_threads">10</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">5000</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.path">/ingestion/send?topic=ingestion-topic</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;audit_event&quot;: {&#xd;
+        &quot;security_event&quot;: {&#xd;
+            &quot;uuid&quot;: &quot;aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee&quot;,&#xd;
+            &quot;user&quot;: &quot;test-user-3&quot;,&#xd;
+            &quot;time&quot;: &quot;2023-01-01T00:00:00.000Z&quot;,&#xd;
+            &quot;tenant&quot;: &quot;test-tenant-1&quot;,&#xd;
+            &quot;data&quot;: &quot;security event message&quot;,&#xd;
+            &quot;identityProvider&quot;: &quot;$IDP&quot;,&#xd;
+            &quot;ip&quot;: &quot;192.168.0.1&quot;,&#xd;
+            &quot;attributes&quot;: [&#xd;
+                {&#xd;
+                    &quot;name&quot;: &quot;string&quot;,&#xd;
+                    &quot;value&quot;: &quot;string&quot;&#xd;
+                }&#xd;
+            ],&#xd;
+            &quot;customDetails&quot;: {}&#xd;
+        }&#xd;
+    }&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkQ5RUNESkdpTV9uYXcyNmZyc2RsViJ9.eyJpc3MiOiJodHRwczovL2Rldi1ucG5pZmR6YjRudW5sem42LnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJqczIwN1dDMWZab1ZIRk5DbnVOTktVbjRFalVMOHIxR0BjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9kZXYtbnBuaWZkemI0bnVubHpuNi51cy5hdXRoMC5jb20vYXBpL3YyLyIsImlhdCI6MTcyNDA1OTk2OCwiZXhwIjoxNzI0MTQ2MzY4LCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJhenAiOiJqczIwN1dDMWZab1ZIRk5DbnVOTktVbjRFalVMOHIxRyJ9.qRe_DplrzflGy0sBHDJjt7EZfZNEVDQuhTJjcLuFJuWs1hz4ZOmRcV76erzujoN8IOsH8RHbxil1b-wORuayvK5KEXKR-r4uz69jgbGiXVIlsud_wotjueoUFdIf_pJy6J9jTdTUv2IBc5bQWwBAC8D60Q0MMwdxrjmSQijA0EDlRvYvhZQboL1Jbn4zyINzJkIyNlCn4Zag4izYc7IJJ0oJCAMvdgZumqWn8lEJK-k8O0gCOBNBfDa5OIMNT_C03eXqSwmDFVjwztrGgnDXWwRBwHmmy-LnJf-QIsH5gcq-tAAHhXhDUQ1esRQP3bxqlbHw_fbLvs4a2V4IERm9Zw</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
