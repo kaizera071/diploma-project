@@ -32,29 +32,26 @@ public class MinioService {
     @Value("${my.minio.bucketname}")
     private String minioBucketName;
 
+    private String eventType;
+    private String tenant;
+    private String time;
+    private String user;
+
     public void saveToMinIO(String message) {
         try {
-            String eventType = "";
-            String tenant = "";
-            String time = "";
-            String user = "";
-
             JsonNode jsonNode = objectMapper.readTree(message);
             JsonNode auditEventNode = jsonNode.path("audit_event");
-
             Iterator<Map.Entry<String, JsonNode>> fields = auditEventNode.fields();
 
             if (fields.hasNext()) {
                 Map.Entry<String, JsonNode> field = fields.next();
                 eventType = field.getKey();
                 JsonNode eventData = field.getValue();
-
                 tenant = eventData.path("tenant").asText();
                 time = eventData.path("time").asText();
                 user = eventData.path("user").asText();
             }
             String objectKey = String.format("%s/%s/%s/%s", tenant, time, eventType, user);
-
             String prettyString = objectMapper.writeValueAsString(jsonNode);
             String encryptedMessage = EncryptionUtil.encrypt(prettyString, keyManager.getSecretKey());
             InputStream is = new ByteArrayInputStream(encryptedMessage.getBytes());

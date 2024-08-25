@@ -24,6 +24,9 @@ public class MinioConfig {
     @Value("${my.minio.bucketname}")
     private String minioBucketName;
 
+    private static final int MAX_RETRIES = 3;
+    private static final int RETRY_DELAY_MS = 5000;
+
     @Bean
     public MinioClient minioClient() {
         return MinioClient.builder()
@@ -35,11 +38,18 @@ public class MinioConfig {
     @Bean
     public ApplicationRunner applicationRunner(MinioClient minioClient) {
         return args -> {
-            ensureBucketExists(minioClient, minioBucketName);
+            try {
+                ensureBucketExists(minioClient, minioBucketName, MAX_RETRIES);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Bucket creation operation was interrupted.");
+                e.printStackTrace();
+            }
         };
     }
 
-    private void ensureBucketExists(MinioClient minioClient, String bucketName) {
+    private void ensureBucketExists(MinioClient minioClient, String bucketName, int retriesLeft)
+            throws InterruptedException {
         try {
             boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
             if (!isExist) {
@@ -49,7 +59,25 @@ public class MinioConfig {
                 System.out.println("Bucket already exists.");
             }
         } catch (Exception e) {
+            handleRetry(e, minioClient, bucketName, retriesLeft);
+        }
+    }
+
+    private void handleRetry(Exception e, MinioClient minioClient, String bucketName, int retriesLeft)
+            throws InterruptedException {
+        if (retriesLeft <= 0) {
+            System.err.println("Failed to ensure bucket existence after maximum attempts.");
             e.printStackTrace();
+            throw new RuntimeException("Bucket creation failed after retries", e);
+        } else {
+            System.out.println("Attempt failed. Retrying in " + (RETRY_DELAY_MS / 1000) + " seconds...");
+            try {
+                Thread.sleep(RETRY_DELAY_MS);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+                throw ie;
+            }
+            ensureBucketExists(minioClient, bucketName, retriesLeft - 1);
         }
     }
 }

@@ -55,7 +55,7 @@ public class MinioService {
                             .object(objectName)
                             .build());
 
-            // Assuming the data is encrypted, we decrypt it here
+            // Since the data is encrypted, we decrypt it here
             String encryptedContent = new String(stream.readAllBytes());
             String decryptedContent = decryptMessage(encryptedContent);
             return objectMapper.readTree(decryptedContent);
@@ -67,30 +67,49 @@ public class MinioService {
 
     public List<JsonNode> searchObjects(String bucketName, String tenant, String eventType, String user,
             Instant startTime, Instant endTime) {
-        // Adjust prefix handling for wildcards
-        String prefix = "";
-        if (tenant != null && !tenant.isEmpty()) {
-            prefix += tenant + "/";
-        }
-
+        String prefix = createPrefix(tenant);
         List<String> objectNames = listObjects(bucketName, prefix);
 
-        // Filter objects based on time frame and other optional parameters
         return objectNames.stream()
-                .filter(objectName -> {
-                    String[] parts = objectName.split("/");
-                    if (parts.length > 3) {
-                        Instant objectTime = Instant.parse(parts[1]);
-                        boolean timeMatch = (startTime == null || !objectTime.isBefore(startTime))
-                                && (endTime == null || !objectTime.isAfter(endTime));
-                        boolean eventMatch = (eventType == null || eventType.isEmpty() || eventType.equals(parts[2]));
-                        boolean userMatch = (user == null || user.isEmpty() || user.equals(parts[3]));
-                        return timeMatch && eventMatch && userMatch;
-                    }
-                    return false;
-                })
+                .filter(objectName -> isValidObject(objectName, startTime, endTime, eventType, user))
                 .map(objectName -> readObject(bucketName, objectName))
                 .collect(Collectors.toList());
+    }
+
+    private String createPrefix(String tenant) {
+        if (tenant != null && !tenant.isEmpty()) {
+            return tenant + "/";
+        }
+        return "";
+    }
+
+    private boolean isValidObject(String objectName, Instant startTime, Instant endTime, String eventType,
+            String user) {
+        String[] parts = objectName.split("/");
+
+        if (parts.length <= 3) {
+            return false;
+        }
+
+        Instant objectTime = Instant.parse(parts[1]);
+        boolean isWithinTimeFrame = isWithinTimeFrame(objectTime, startTime, endTime);
+        boolean isEventMatch = isEventMatch(parts[2], eventType);
+        boolean isUserMatch = isUserMatch(parts[3], user);
+
+        return isWithinTimeFrame && isEventMatch && isUserMatch;
+    }
+
+    private boolean isWithinTimeFrame(Instant objectTime, Instant startTime, Instant endTime) {
+        return (startTime == null || !objectTime.isBefore(startTime))
+                && (endTime == null || !objectTime.isAfter(endTime));
+    }
+
+    private boolean isEventMatch(String objectEvent, String eventType) {
+        return eventType == null || eventType.isEmpty() || eventType.equals(objectEvent);
+    }
+
+    private boolean isUserMatch(String objectUser, String user) {
+        return user == null || user.isEmpty() || user.equals(objectUser);
     }
 
     private String decryptMessage(String encryptedMessage) {
