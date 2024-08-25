@@ -30,7 +30,7 @@ wait_for_pod_running() {
             echo "Pod $POD_NAME is in state: $POD_STATUS"
             exit 1
         fi
-        sleep 3 # Adjust the interval as needed
+        sleep 3 # Adjust the interval if needed
     done
 }
 

@@ -3,6 +3,7 @@ package com.audit.system.ingestion.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.everit.json.schema.ValidationException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,14 +49,21 @@ public class IngestionController {
 
             // Return the response with status 200 OK
             return ResponseEntity.ok(responseBody);
-        } catch (Exception e) {
+
+        } catch (ValidationException e) {
             // Create response body for errors
             Map<String, String> errorResponseBody = new HashMap<>();
             errorResponseBody.put("error", "JSON validation error: " + e.getMessage());
 
             // Return a bad request response if validation fails
             return ResponseEntity.badRequest().body(errorResponseBody);
-        }
+        } catch (Exception e) {
+            // Create response body for errors
+            Map<String, String> errorResponseBody = new HashMap<>();
+            errorResponseBody.put("error", "Unexepected error : " + e.getMessage());
 
+            // Return an internal server error response if an exception occurs
+            return ResponseEntity.internalServerError().body(errorResponseBody);
+        }
     }
 }

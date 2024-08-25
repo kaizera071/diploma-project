@@ -23,12 +23,14 @@ public class KafkaConfig {
     @Value("${my.kafka.password}")
     private String kafkaPassword;
 
+    @Value("${my.kafka.bootstrap-servers}")
+    private String kafkaBootstrapServers;
+
     @Bean
     public ProducerFactory<String, Object> producerFactory() {
 
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "kafka-controller-0.kafka-controller-headless.default.svc.cluster.local:9092,kafka-controller-1.kafka-controller-headless.default.svc.cluster.local:9092,kafka-controller-2.kafka-controller-headless.default.svc.cluster.local:9092");
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBootstrapServers);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         configProps.put("security.protocol", "SASL_PLAINTEXT");

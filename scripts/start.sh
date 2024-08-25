@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source common
+source common.sh
 
 cd ..
 
@@ -42,7 +42,7 @@ install_minio() {
     helm install minio oci://registry-1.docker.io/bitnamicharts/minio
 }
 
-# Build ingestion maven project
+# Function to build maven project
 build_maven_project() {
     local pom_path="$1"
     mvn -f "$pom_path" clean install
@@ -51,11 +51,10 @@ build_maven_project() {
 # Function to build Docker image
 build_docker_image() {
     local image_tag="$1"
-    local doget_file_location="$2"
+    local docker_file_location="$2"
 
     echo "Building Docker image..."
-    docker build -t "$image_tag" -f "$doget_file_location" .
-
+    docker build -t "$image_tag" -f "$docker_file_location" .
 }
 
 # Start Minikube if not already running

@@ -1,5 +1,6 @@
 package com.audit.system.ingestion.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @SuppressWarnings("removal")
+    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
+    private String jwkUri;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
@@ -23,7 +26,6 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        String issuerUri = "https://dev-npnifdzb4nunlzn6.us.auth0.com/";
-        return NimbusJwtDecoder.withJwkSetUri(issuerUri + ".well-known/jwks.json").build();
+        return NimbusJwtDecoder.withJwkSetUri(jwkUri).build();
     }
 }
