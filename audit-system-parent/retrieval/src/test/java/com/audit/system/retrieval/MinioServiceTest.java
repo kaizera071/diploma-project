@@ -53,7 +53,9 @@ class MinioServiceTest {
         when(item1.objectName()).thenReturn("object1.json");
         when(item2.objectName()).thenReturn("object2.json");
 
+        @SuppressWarnings("unchecked")
         Result<Item> result1 = mock(Result.class);
+        @SuppressWarnings("unchecked")
         Result<Item> result2 = mock(Result.class);
 
         when(result1.get()).thenReturn(item1);
