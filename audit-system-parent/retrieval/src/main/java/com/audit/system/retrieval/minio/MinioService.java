@@ -46,6 +46,33 @@ public class MinioService {
         return objectNames;
     }
 
+    public List<JsonNode> searchObjects(String bucketName, String tenant, String eventType, String user,
+            Instant startTime, Instant endTime) {
+        String prefix = createPrefix(tenant);
+        List<String> objectNames = listObjects(bucketName, prefix);
+
+        return objectNames.stream()
+                .filter(objectName -> isValidObject(objectName, startTime, endTime, eventType, user))
+                .map(objectName -> readObject(bucketName, objectName))
+                .collect(Collectors.toList());
+    }
+
+    private boolean isValidObject(String objectName, Instant startTime, Instant endTime, String eventType,
+            String user) {
+        String[] parts = objectName.split("/");
+
+        if (parts.length <= 3) {
+            return false;
+        }
+
+        Instant objectTime = Instant.parse(parts[1]);
+        boolean isWithinTimeFrame = isWithinTimeFrame(objectTime, startTime, endTime);
+        boolean isEventMatch = isEventMatch(parts[2], eventType);
+        boolean isUserMatch = isUserMatch(parts[3], user);
+
+        return isWithinTimeFrame && isEventMatch && isUserMatch;
+    }
+
     public JsonNode readObject(String bucketName, String objectName) {
         try {
             InputStream stream = minioClient.getObject(GetObjectArgs.builder()
@@ -63,38 +90,11 @@ public class MinioService {
         return null;
     }
 
-    public List<JsonNode> searchObjects(String bucketName, String tenant, String eventType, String user,
-            Instant startTime, Instant endTime) {
-        String prefix = createPrefix(tenant);
-        List<String> objectNames = listObjects(bucketName, prefix);
-
-        return objectNames.stream()
-                .filter(objectName -> isValidObject(objectName, startTime, endTime, eventType, user))
-                .map(objectName -> readObject(bucketName, objectName))
-                .collect(Collectors.toList());
-    }
-
     private String createPrefix(String tenant) {
         if (tenant != null && !tenant.isEmpty()) {
             return tenant + "/";
         }
         return "";
-    }
-
-    private boolean isValidObject(String objectName, Instant startTime, Instant endTime, String eventType,
-            String user) {
-        String[] parts = objectName.split("/");
-
-        if (parts.length <= 3) {
-            return false;
-        }
-
-        Instant objectTime = Instant.parse(parts[1]);
-        boolean isWithinTimeFrame = isWithinTimeFrame(objectTime, startTime, endTime);
-        boolean isEventMatch = isEventMatch(parts[2], eventType);
-        boolean isUserMatch = isUserMatch(parts[3], user);
-
-        return isWithinTimeFrame && isEventMatch && isUserMatch;
     }
 
     private boolean isWithinTimeFrame(Instant objectTime, Instant startTime, Instant endTime) {
