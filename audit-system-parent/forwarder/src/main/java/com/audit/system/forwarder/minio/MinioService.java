@@ -56,13 +56,12 @@ public class MinioService {
             String encryptedMessage = EncryptionUtil.encrypt(prettyString, keyManager.getSecretKey());
             InputStream is = new ByteArrayInputStream(encryptedMessage.getBytes());
 
-            minioClient.putObject(
-                    PutObjectArgs.builder()
-                            .bucket(minioBucketName)
-                            .object(objectKey + "/message-" + System.currentTimeMillis() + ".json")
-                            .stream(is, is.available(), -1)
-                            .contentType("application/json")
-                            .build());
+            minioClient.putObject(PutObjectArgs.builder()
+                    .bucket(minioBucketName)
+                    .object(objectKey + "/message-" + System.currentTimeMillis() + ".json")
+                    .stream(is, is.available(), -1)
+                    .contentType("application/json")
+                    .build());
         } catch (Exception e) {
             throw new RuntimeException("Error saving to MinIO", e);
         }
