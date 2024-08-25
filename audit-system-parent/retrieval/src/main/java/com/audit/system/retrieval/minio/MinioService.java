@@ -37,7 +37,6 @@ public class MinioService {
         try {
             Iterable<Result<Item>> results = minioClient.listObjects(
                     ListObjectsArgs.builder().bucket(bucketName).prefix(prefix).recursive(true).build());
-
             for (Result<Item> result : results) {
                 objectNames.add(result.get().objectName());
             }
@@ -49,11 +48,10 @@ public class MinioService {
 
     public JsonNode readObject(String bucketName, String objectName) {
         try {
-            InputStream stream = minioClient.getObject(
-                    GetObjectArgs.builder()
-                            .bucket(bucketName)
-                            .object(objectName)
-                            .build());
+            InputStream stream = minioClient.getObject(GetObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(objectName)
+                    .build());
 
             // Since the data is encrypted, we decrypt it here
             String encryptedContent = new String(stream.readAllBytes());

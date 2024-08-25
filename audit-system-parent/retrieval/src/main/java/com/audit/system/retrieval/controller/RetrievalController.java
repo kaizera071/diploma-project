@@ -22,11 +22,11 @@ public class RetrievalController {
 
         @GetMapping("/read")
         public ResponseEntity<Object[]> read(
+                        @RequestParam(required = true) String startTime,
+                        @RequestParam(required = true) String endTime,
                         @RequestParam(required = false) String tenant,
                         @RequestParam(required = false) String eventType,
-                        @RequestParam(required = false) String user,
-                        @RequestParam(required = false) String startTime,
-                        @RequestParam(required = false) String endTime) {
+                        @RequestParam(required = false) String user) {
 
                 Instant startInstant = startTime != null ? Instant.parse(startTime) : null;
                 Instant endInstant = endTime != null ? Instant.parse(endTime) : null;
@@ -36,8 +36,7 @@ public class RetrievalController {
 
                 // Create the response body as an Object array
                 Object[] responseBody = new Object[] {
-                                "Successfully retrieved " + results.size() + " records.",
-                                results
+                                "Successfully retrieved " + results.size() + " records.", results
                 };
 
                 // Return the response with status 200 OK
