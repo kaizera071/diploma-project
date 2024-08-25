@@ -7,7 +7,7 @@ The Audit system provides an Audit system REST API meant customers, which is res
 
 
 <p align="center">
-  <img src="https://github.com/kaizera071/diploma-project/blob/main/docs/diagrams/AuditSystem.png?raw=true" alt="AuditSystem Base diagram"/>
+  <img src="https://github.com/kaizera071/diploma-project/blob/main/docs/diagrams/AuditSystem.drawio.png?raw=true" alt="AuditSystem Base diagram"/>
 </p>
 
 
