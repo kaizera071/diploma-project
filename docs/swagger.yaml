@@ -2,8 +2,8 @@ openapi: 3.0.3
 info:
   title: Audit System
   version: 1.0.0
-  description: The Audit system provides an Audit system REST API meant customers, which is responsible for the recording of audit relevant events for a given tenant. The audit log records written via this Ingestion API can afterwards be retrieved via the Audit Retrieval API.
-x-sap-shortText: Provides functionality to write audit logs.
+  description: The Audit System, which is responsible for the recording of audit relevant events for a given tenant. The audit log records written via this Ingestion API can afterwards be retrieved via the Audit Retrieval API.
+x-sap-shortText: Provides functionality to write and read audit logs.
 externalDocs:
   description: Audit System - Documentation
   url: https://github.com/kaizera071/diploma-project
@@ -69,10 +69,6 @@ paths:
           $ref: "#/components/responses/StatusCode401"
         "403":
           $ref: "#/components/responses/StatusCode403"
-        "413":
-          $ref: "#/components/responses/StatusCode413"
-        "429":
-          $ref: "#/components/responses/StatusCode429"
         "500":
           $ref: "#/components/responses/StatusCode500"
         "502":
@@ -154,10 +150,6 @@ paths:
           $ref: "#/components/responses/StatusCode401"
         "403":
           $ref: "#/components/responses/StatusCode403"
-        "413":
-          $ref: "#/components/responses/StatusCode413"
-        "429":
-          $ref: "#/components/responses/StatusCode429"
         "500":
           $ref: "#/components/responses/StatusCode500"
         "502":
@@ -397,31 +389,10 @@ components:
       description: Missing or invalid "Authorization" header
     StatusCode403:
       description: Request forbidden by administrative rules
-    StatusCode413:
-      description: The audit log message size exceeds 10KB
-    StatusCode429:
-      description: Rate limit per tenant is hit
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  code:
-                    type: string
-                    example: "429"
-                  message:
-                    type: string
-                    example: Too many requests
-                  target:
-                    type: string
-                    example: /send
     StatusCode500:
       description: If an unexpected exception occurred
     StatusCode502:
-      description: Load balancer issue
+      description: Ingress issue
     StatusCode503:
       description: Global rate limit is
       content:
@@ -442,7 +413,7 @@ components:
                     type: string
                     example: /send
     StatusCode504:
-      description: Load balancer issue
+      description: Ingress issue
   securitySchemes:
     oAuth2ClientCredentials:
       type: oauth2
